@@ -1,0 +1,54 @@
+import unittest
+
+from selenium import webdriver
+from pages.register import reg
+from pages.hotel import hotel
+from pages.currency import curr
+from pages.tour import tour
+
+class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path=r"C:/New folder/chromedriver_win32/chromedriver.exe")
+    def test_login(self):
+        driver = self.driver
+        driver.get("https://phptravels.org/register.php")
+        driver.maximize_window()
+        driver.execute_script("window.scrollBy(0,1000)","")
+        r=reg(driver)
+        r.register("Sanchita","Sharma","Sanchita@gmail.com","7665","Hcl","mp","rdm","mp",76566565,"Sanchita@123k")
+        act=driver.find_element_by_xpath("//div[@class='alert-body']").text
+        exp="The following errors occurred:"
+        self.assertTrue(act.__contains__(exp))
+    def test_hotel(self):
+        driver = self.driver
+        driver.get("https://www.phptravels.net/hotels")
+        driver.maximize_window()
+        driver.execute_script("window.scrollBy(0,1000)", "")
+        h=hotel(driver)
+        h.search("Aman","ap","ap@gmail.com",2372,"ramanagar","Harshita","rane","sahil","jogi","priyanshu","parjapati","sanchita","sharma")
+        act=driver.find_element_by_xpath("//h3[@class='title pb-1']").text
+        exp="Thanks Aman ap"
+        self.assertEqual(exp,act)
+    def test_currency(self):
+        driver=self.driver
+        driver.get("https://www.phptravels.net/")
+        driver.maximize_window()
+        driver.execute_script("window.scrollBy(0,1000)", "")
+        z=curr(driver)
+        z.currency()
+        act=driver.find_element_by_xpath("//span[normalize-space()='INR 56152']").text
+        exp="INR 56152"
+        self.assertEqual(exp,act)
+    def test_tour(self):
+        driver = self.driver
+        driver.get("https://www.phptravels.net/")
+        driver.maximize_window()
+        driver.execute_script("window.scrollBy(0,1000)", "")
+        t=tour(driver)
+        t.tours("Sanchita","Sharma","Sanchi@gmail.com","76455","cisf","Sanchi","Sharma","Sanchita","Sharma")
+        act=driver.current_url
+        exp="https://www.phptravels.net/tours/book"
+        self.assertEqual(exp,act)
+if __name__ == '__main__':
+    unittest.main()
+    
