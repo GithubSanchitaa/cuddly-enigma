@@ -43,3 +43,76 @@ class reg():
         self.driver.find_element_by_id(self.gencl).send_keys(pwd1)
         self.driver.implicitly_wait(8)
         self.driver.find_element_by_xpath(self.sub).click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def email_enter(self, param):
+        pass
+
+    def com_enter(self, param):
+        pass
+
+    def enter_name(self, param):
+        pass
+
+    def l_name(self, param):
+        pass
+
+    def street_ad(self, param):
+        pass
+
+    def phone_no(self, param):
+        pass
