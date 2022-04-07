@@ -9,16 +9,35 @@ from pages.tour import tour
 class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome(executable_path=r"C:/New folder/chromedriver_win32/chromedriver.exe")
-    def test_login(self):
         driver = self.driver
         driver.get("https://phptravels.org/register.php")
         driver.maximize_window()
-        driver.execute_script("window.scrollBy(0,1000)","")
-        r=reg(driver)
-        r.register("Sanchita","Sharma","Sanchita@gmail.com","7665","Hcl","mp","rdm","mp",76566565,"Sanchita@123k")
-        act=driver.find_element_by_xpath("//div[@class='alert-body']").text
-        exp="The following errors occurred:"
-        self.assertTrue(act.__contains__(exp))
+
+
+
+    def test_login(self):
+        exl=ExcelOperatons()
+        exl.loadfile("C:/Users/dayanidhi.shash/Downloads/Myexcel.xlsx")
+        print(exl.rowCount())
+        qw=reg(self.driver)
+        for i in range(2, exl.rowCount() + 1):
+            qw.enter_name(exl.readData(i,1))
+            qw.l_name(exl.readData(i,2))
+            qw.email_enter(exl.readData(i,3))
+            qw.phone_no(exl.readData(i,4))
+            qw.com_enter(exl.readData(i,5))
+            qw.street_ad(exl.readData(i,6))
+            time.sleep(1)
+            act=self.driver.title
+            print(act)
+            exp="Register"
+            self.assertEqual(exp,act)
+            actual_url_1=self.driver.current_url
+            print(actual_url_1)
+            expected_url_1="https://phptravels.org/register.php"
+            self.assertEqual(expected_url_1, actual_url_1 )
+            
+            
     def test_hotel(self):
         driver = self.driver
         driver.get("https://www.phptravels.net/hotels")
