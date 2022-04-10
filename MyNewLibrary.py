@@ -1,88 +1,59 @@
 class Library:
-    def __init__(self, listofBooks):
-        self.books = listofBooks
+    def __init__(self, listOfBooks):
+        self.books = listOfBooks
 
     def displayAvailableBooks(self):
-        print(f"\n{len(self.books)} AVAILABLE BOOKS ARE: ")
+        print("Books present in this library are: ")
         for book in self.books:
-            print("" + book)
-        print("\n")
+            print(" *" + book)
 
-    def borrowBook(self, name, bookname):
-        if bookname not in self.books:
-            print(
-                f"{bookname} BOOK IS NOT AVAILABLE EITHER TAKEN BY SOMEONE ELSE, WAIT UNTIL HE RETURNED.\n")
+    def borrowBook(self, bookName):
+        if bookName in self.books:
+            print(f"You have been issued {bookName}. Please keep it safe and return it on Time.")
+            self.books.remove(bookName)
+            return True
         else:
-            track.append({name: bookname})
-            print("BOOK ISSUED : THANK YOU KEEP IT WITH CARE AND RETURN ON TIME.\n")
-            self.books.remove(bookname)
+            print(
+                "Sorry, This book has already been issued to someone else. Please wait until the book is available")
+            return False
 
-    def returnBook(self, bookname):
-        print("BOOK RETURNED : THANK YOU! \n")
-        self.books.append(bookname)
-
-    def donateBook(self, bookname):
-        print("BOOK DONATED : THANK YOU VERY MUCH, HAVE A GREAT DAY.\n")
-        self.books.append(bookname)
+    def returnBook(self, bookName):
+        self.books.append(bookName)
+        print("Thanks for returning this book! Hope you enjoyed reading it. Have a great day ahead!")
 
 
-class Student():
+class Student:
     def requestBook(self):
-        print("So, you want to borrow book!")
-        self.book = input("Enter name of the book: ")
+        self.book = input("Enter the name of the book you want to borrow: ")
         return self.book
 
     def returnBook(self):
-        print("So, you want to return book!")
-        name = input("Enter your name: ")
-        self.book = input("Enter name of the book you want to return: ")
-        if {name: self.book} in track:
-            track.remove({name: self.book})
-        return self.book
-
-    def donateBook(self):
-        print("Okay! you want to donate book!")
-        self.book = input("Enter name of the book you want to donate: ")
+        self.book = input("Enter the name of the book you want to return: ")
         return self.book
 
 
 if __name__ == "__main__":
-
-    MyNewLibrary = Library(
-        ["HarryPotter", "MyName", "Bharat", "Soldier", "NewDay", "TheEnd"])
+    MyNewLibrary = Library(["HarryPotter", "MyName", "Bharat", "Soldier", "NewDay", "TheEnd"])
     student = Student()
-    track = []
-
-    print("\t\t\t\t\t\t\t♦♦♦♦♦♦♦ WELCOME TO THE MyNewLibrary ♦♦♦♦♦♦♦\n")
-    print("""CHOOSE WHAT YOU WANT TO DO:-\n1. Listing all books\n2. Borrow books\n3. Return books\n4. Donate books\n5. Track books\n6. exit the library\n""")
-
+    # MyNewLibrary.displayAvailableBooks()
     while (True):
-        try:
-            usr_response = int(input("Enter your choice: "))
-
-            if usr_response == 1:  # listing
-                MyNewLibrary.displayAvailableBooks()
-            elif usr_response == 2:  # borrow
-                MyNewLibrary.borrowBook(
-                    input("Enter your name: "), student.requestBook())
-            elif usr_response == 3:  # return
-                MyNewLibrary.returnBook(student.returnBook())
-            elif usr_response == 4:  # donate
-                MyNewLibrary.donateBook(student.donateBook())
-            elif usr_response == 5:  # track
-                for i in track:
-                    for key, value in i.items():
-                        holder = key
-                        book = value
-                        print(f"{book} book is taken/issued by {holder}.")
-                print("\n")
-                if len(track) == 0:
-                    print("NO BOOKS ARE ISSUED!. \n")
-
-            elif usr_response == 6: #exit
-                print("THANK YOU ! \n")
-                exit()
-            else:
-                print("INVAILD INPUT! \n")
-        except Exception as e:   #catch errors
-            print(f"{e}---> INVALID INPUT! \n")
+        welcomeMsg = '''\n ====== Welcome to MyNewLibrary ======
+        Please choose an option:
+        1. List all the books
+        2. Request a book
+        3. Add/Return a book
+        4. Exit the Library
+        '''
+        print(welcomeMsg)
+        a = int(input("Enter a choice: "))
+        if a == 1:
+            MyNewLibrary.displayAvailableBooks()
+        elif a == 2:
+            MyNewLibrary.borrowBook(student.requestBook())
+        elif a == 3:
+            MyNewLibrary.returnBook(student.returnBook())
+        elif a == 4:
+            print("Thanks for choosing MyNewLibrary. Have a great day ahead!")
+            exit()
+        else:
+            print("Invalid Choice!")
